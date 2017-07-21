@@ -1,18 +1,26 @@
 ## MT7601U Linux driver
-
+支持小度WIFI、360WIFI、小米WiFi。
 Many cheap USB wifi dongles use the MT7601U chip.
-
-<img src="http://porjo.github.io/mt7601/dongle1.jpg" width="150">
-<img src="http://porjo.github.io/mt7601/dongle2.jpg" width="150">
-
-Unfortunately, the driver is not part of the Linux kernel source tree (yet?). This repository contains:
-* source code from [`DPO_MT7601U_LinuxSTA_3.0.0.4_20130913.tar.bz2`](http://www.mediatek.com/en/downloads/mt7601u-usb/) (md5sum `5f440dccc8bc952745a191994fc34699`) 
-* file `DPO_MT7601U_LinuxSTA_3.0.0.4_20130913-Linux-3.17.0-v2.patch`
- has been applied
-
-The patch improves stability and performance for kernels >= 3.x
+Including 360widi xiaodu wifi and xiaomi wifi.
+Now they are all drived by this driver.
 
 ### Usage
+
+MT7601 Liunx驱动支持小度WIFI、360WIFI、小米WiFi。
+
+使用lsusb命令可以获取USB设备ID。 小度wifi为2955:0001或2955:1001 　360WIFI2为148F:760B 二者均使用Mediatek Ralink MT7601芯片，都是在Mediatek官网下载MT7601U USB驱动源码包. 修改common/rtusb_dev_id.c文件，在 
+
+{USB_DEVICE(0x148f,0x7601)}, /* MT 6370 /
+
+下面加上 
+
+{USB_DEVICE(0x2955,0x0001)}, / XiaoDu Wifi */
+
+{USB_DEVICE(0x2955,0x1001)}, /* XiaoDu Wifi */
+
+{USB_DEVICE(0x148f,0x760b)}, /* 360 Wifi */
+
+使用make 命令编译后，执行make install 。 根据iwpriv_usage.txt，执行初始化或重启系统，网卡就可以使用了
 
 First install kernel-devel for your Linux distro
 
